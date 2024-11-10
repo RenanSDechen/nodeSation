@@ -18,7 +18,7 @@ app.post('/users',async (request, reply) => {
     })
 
     const {name, email} =createUserSchema.parse(request.body)
-    await prisma.user.crate({
+    await prisma.user.create({
         data: {
             name,
             email,
