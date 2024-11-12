@@ -28,4 +28,5 @@ model StatusStation{
   umidade       Float
   luminosidade  Float
   altitude      Float 
+  createAt      DateTime @default(now())
 }

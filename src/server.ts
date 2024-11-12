@@ -27,6 +27,28 @@ app.post('/users',async (request, reply) => {
 
     return reply.status(201).send()
 })
+app.post('/dataSatusUpload',async (request, reply) => {
+    const dataUpload = z.object({
+        temperatura: z.number(),
+        pressao: z.number(),
+        SenTermica: z.number(),
+        umidade: z.number(),
+        luminosidade: z.number(),
+    })
+
+    const {temperatura, pressao,SenTermica,umidade,luminosidade} =dataUpload.parse(request.body)
+    await prisma.StatusStation.create({
+        data: {
+            temperatura,
+            pressao,
+            SenTermica,
+            umidade,
+            luminosidade
+        }
+    })
+
+    return reply.status(201).send()
+})
 
 app.listen({
     host:'0.0.0.0',
