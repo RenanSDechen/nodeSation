@@ -19,3 +19,13 @@ model User {
   email    String 
   createAt DateTime @default(now())
 }
+
+model StatusStation{
+  id            String   @id @default(cuid())
+  temperatura   Float
+  pressao       Float
+  SenTermica    Float 
+  umidade       Float
+  luminosidade  Float
+  altitude      Float 
+}
