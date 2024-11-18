@@ -65,13 +65,21 @@ app.post('/dataStatusUpload',async (request, reply) => {
         });
         return reply.status(201).send();
     } catch (error) {
+        if (error instanceof z.ZodError) {
             return reply.status(400).send({
                 message: 'Erro na validação dos dados.',
-                errors: error.errors.map((err: { path: any[]; message: any }) => ({
+                errors: error.errors?.map((err: { path: any[]; message: any }) => ({
                     field: err.path.join('.'),
                     message: err.message,
-                })),
+                })) || [],  // Se error.errors não for um array, retorna um array vazio
             });
+        }
+
+        // Se o erro não for relacionado ao Zod, retornamos um erro genérico
+        return reply.status(500).send({
+            message: 'Erro inesperado.',
+            error: error.message,
+        });
     }
     
 });
